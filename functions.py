@@ -1,3 +1,4 @@
+import math
 import numpy as N
 
 def ApproximateJacobian(f, x, dx=1e-6):
@@ -11,7 +12,7 @@ def ApproximateJacobian(f, x, dx=1e-6):
     for i in range(n):
         v = N.matrix(N.zeros((n,1)))
         v[i,0] = dx
-        Df_x[:,i] = f(x + v) - fx  / dx missing
+        Df_x[:,i] = (f(x + v) - fx) / dx
     return Df_x
 
 class Polynomial(object):
@@ -22,7 +23,6 @@ class Polynomial(object):
 
     p = Polynomial([1, 2, 3])
     p(5)"""
-
     def __init__(self, coeffs):
         self._coeffs = coeffs
 
@@ -37,8 +37,90 @@ class Polynomial(object):
 
     def __call__(self, x):
         return self.f(x)
-    ADD Analytical Jacobian function for polynomial 1d jacobian is just a number i think
 
-ADD class mutliple dimension example that has an analytical solution, similar to above. (test with approx jacobian in testFunctions.py)
+    def AnalyticalJacobian(self,x):
+        df = 0
+        for n in range(1,len(self._coeffs)):
+            df += n*self._coeffs[n] * x ** (n-1)
+        return N.matrix(df)
 
-ADD class which calculates jacobian with an error (test with the approximate jacobian)
+class Linear3D:
+    def f(self,x):
+        ans=N.matrix(N.zeros((len(x),1)))
+        ans[0,0]=5*x[0]-3
+        ans[1,0]=4*x[1]-1
+        ans[2,0]=x[2]+3
+        return ans
+
+    def __call__(self, x):
+        return self.f(x)
+
+    def AnalyticalJacobian(self,x):
+        df = N.matrix(N.zeros((len(x),len(x))))
+        df[0,0]=5
+        df[0,1]=0
+        df[0,2]=0
+        df[1,0]=0
+        df[1,1]=4
+        df[1,2]=0
+        df[2,0]=0
+        df[2,1]=0
+        df[2,2]=1
+        return df
+
+class PolynomialMD(object):
+    """Callable polynomial object.
+
+    Example usage: to construct the polynomial p(x) = x^2 + 2x + 3,
+    and evaluate p(5):
+
+    p = Polynomial([1, 2, 3])
+    p(5)"""
+
+    def f(self,x):
+        ans=N.matrix(N.zeros((len(x),1)))
+        ans[0,0]=5*x[1]
+        ans[1,0]=4*x[0]**2-2*math.sin(x[1]*x[2])
+        ans[2,0]=x[1]*x[2]
+        return ans
+
+    def __call__(self, x):
+        return self.f(x)
+
+    def AnalyticalJacobian(self,x):
+        df = N.matrix(N.zeros((len(x),len(x))))
+        df[0,0]=0
+        df[0,1]=5
+        df[0,2]=0
+        df[1,0]=8*x[0]
+        df[1,1]=-2*x[2]*math.cos(x[1]*x[2])
+        df[1,2]=-2*x[1]*math.cos(x[1]*x[2])
+        df[2,0]=0
+        df[2,1]=x[2]
+        df[2,2]=x[1]
+        return df
+
+class WrongPolynomialMD(object):
+
+    def f(self,x):
+        ans=N.matrix(N.zeros((len(x),1)))
+        ans[0,0]=5*x[1]
+        ans[1,0]=4*x[0]**2-2*math.sin(x[1]*x[2])
+        ans[2,0]=x[1]*x[2]
+        return ans
+
+    def __call__(self, x):
+        return self.f(x)
+
+    def AnalyticalJacobian(self,x):
+        df = N.matrix(N.zeros((len(x),len(x))))
+        df[0,0]=0
+        df[0,1]=5
+        df[0,2]=0
+        df[1,0]=8*x[2]
+        df[1,1]=-2*x[2]*math.cos(x[1]*x[2])
+        df[1,2]=-2*x[0]*math.cos(x[1]*x[2])
+        df[2,0]=9
+        df[2,1]=x[2]
+        df[2,2]=x[1]
+        return df
