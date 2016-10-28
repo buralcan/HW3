@@ -44,6 +44,29 @@ class Polynomial(object):
             df += n*self._coeffs[n] * x ** (n-1)
         return N.matrix(df)
 
+class Linear3D:
+    def f(self,x):
+        ans=N.matrix(N.zeros((len(x),1)))
+        ans[0,0]=5*x[0]-3
+        ans[1,0]=4*x[1]-1
+        ans[2,0]=x[2]+3
+        return ans
+
+    def __call__(self, x):
+        return self.f(x)
+
+    def AnalyticalJacobian(self,x):
+        df = N.matrix(N.zeros((len(x),len(x))))
+        df[0,0]=5
+        df[0,1]=0
+        df[0,2]=0
+        df[1,0]=0
+        df[1,1]=4
+        df[1,2]=0
+        df[2,0]=0
+        df[2,1]=0
+        df[2,2]=1
+        return df
 
 class PolynomialMD(object):
     """Callable polynomial object.
