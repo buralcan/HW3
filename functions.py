@@ -44,6 +44,7 @@ class Polynomial(object):
             df += n*self._coeffs[n] * x ** (n-1)
         return N.matrix(df)
 
+# 3D linear equation system
 class Linear3D:
     def f(self,x):
         ans=N.matrix(N.zeros((len(x),1)))
@@ -55,7 +56,7 @@ class Linear3D:
     def __call__(self, x):
         return self.f(x)
 
-    def AnalyticalJacobian(self,x):
+    def AnalyticalJacobian(self,x): # computed by hand
         df = N.matrix(N.zeros((len(x),len(x))))
         df[0,0]=5
         df[0,1]=0
@@ -68,15 +69,33 @@ class Linear3D:
         df[2,2]=1
         return df
 
+# 3D linear equation system with wrong analytical jacobian
+class WrongLinear3D:
+    def f(self,x):
+        ans=N.matrix(N.zeros((len(x),1)))
+        ans[0,0]=5*x[0]-3
+        ans[1,0]=4*x[1]-1
+        ans[2,0]=x[2]+3
+        return ans
+
+    def __call__(self, x):
+        return self.f(x)
+
+    def AnalyticalJacobian(self,x): # this is the wrong jacobian
+        df = N.matrix(N.zeros((len(x),len(x))))
+        df[0,0]=5
+        df[0,1]=0
+        df[0,2]=7
+        df[1,0]=1
+        df[1,1]=3
+        df[1,2]=0
+        df[2,0]=0
+        df[2,1]=9
+        df[2,2]=1
+        return df
+
+# 3D nonlinear set of equations
 class PolynomialMD(object):
-    """Callable polynomial object.
-
-    Example usage: to construct the polynomial p(x) = x^2 + 2x + 3,
-    and evaluate p(5):
-
-    p = Polynomial([1, 2, 3])
-    p(5)"""
-
     def f(self,x):
         ans=N.matrix(N.zeros((len(x),1)))
         ans[0,0]=5*x[1]
@@ -87,7 +106,7 @@ class PolynomialMD(object):
     def __call__(self, x):
         return self.f(x)
 
-    def AnalyticalJacobian(self,x):
+    def AnalyticalJacobian(self,x): # computed by hand
         df = N.matrix(N.zeros((len(x),len(x))))
         df[0,0]=0
         df[0,1]=5
@@ -100,6 +119,7 @@ class PolynomialMD(object):
         df[2,2]=x[1]
         return df
 
+# 3D nonlinear equation system with wrong analytical jacobian
 class WrongPolynomialMD(object):
 
     def f(self,x):
@@ -112,7 +132,7 @@ class WrongPolynomialMD(object):
     def __call__(self, x):
         return self.f(x)
 
-    def AnalyticalJacobian(self,x):
+    def AnalyticalJacobian(self,x): # wrong jacobian
         df = N.matrix(N.zeros((len(x),len(x))))
         df[0,0]=0
         df[0,1]=5

@@ -8,7 +8,7 @@ class TestNewton(unittest.TestCase):
     # test function given in the homework
     def testLinear(self):
         f = lambda x : 3.0 * x + 6.0
-        solver = newton.Newton(f, tol=1.e-15, maxiter=2)
+        solver = newton.Newton(f, tol=1.e-15, maxiter=3)
         x = solver.solve(2.0)
         self.assertEqual(x, -2.0)
 
@@ -17,12 +17,12 @@ class TestNewton(unittest.TestCase):
     def testPolynomial(self):
         # p(x) = x^2 + 3x + 2
         p = F.Polynomial([1, 3, 2])
-        solver = newton.Newton(p.f, tol=1.e-17, maxiter=125)
+        solver = newton.Newton(p.f, tol=1.e-17, maxiter=95)
         x1Appr = solver.solve(0.5)
         self.assertAlmostEqual(x1Appr, -1)
         x2Appr = solver.solve(-3.5)
         self.assertAlmostEqual(x2Appr, -2)
-        solver = newton.Newton(p.f, Df=p.AnalyticalJacobian, tol=1.e-17, maxiter=125)
+        solver = newton.Newton(p.f, Df=p.AnalyticalJacobian, tol=1.e-17, maxiter=95)
         x2Analy = solver.solve(-3.5)
         self.assertAlmostEqual(x2Analy, -2)
 

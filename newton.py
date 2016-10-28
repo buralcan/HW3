@@ -12,12 +12,13 @@ class Newton(object):
         """Return a new object to find roots of f(x) = 0 using Newton's method.
         tol:     tolerance for iteration (iterate until |f(x)| < tol)
         maxiter: maximum number of iterations to perform
-        dx:      step size for computing approximate Jacobian"""
+        dx:      step size for computing approximate Jacobian
+        Df:      analytical jacobian
+        norm:    treshold for distance between initial guess and approximated root"""
         self._f = f
         self._tol = tol
         self._maxiter = maxiter
         self._dx = dx
-        #Df=None
         self._Df = Df
         self._Dimension = Dim
         self._norm = norm
@@ -32,8 +33,8 @@ class Newton(object):
                 return x
             else:
                 x = self.step(x, fx)
+            # exception if the distance between initial guess x0 and xk is larger than a trashold
             if self._norm is not None and N.linalg.norm(x-x0) > self._norm:
-                #raise Exception()
                 raise Exception ("Approximated x is not within an acceptable radius of initial guess x0")
         return x
 
