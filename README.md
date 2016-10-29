@@ -3,9 +3,13 @@ APC 524 Assignment 3: Root finding and automated testing
 Betul Uralcan, Submitted on: 10/28/2016
 ----------------------
 This project offers an implementation of the Newton's method in one and higher dimensions with the functionalities described below. The project includes the following python codes:
+
 1. newton.py: implements the simple root finder Newton's method in one and higher dimensions.
+
 2. functions.py: contains one and higher dimensional functions and functionalities to compute the analytical and approximate jacobians
+
 3. testNewton.py: tests the convergence, accuracy of the Newton method, and a single step of the Newton method. Also contains tests for cases of divergence when the equation does not have a real root or the initial guess is outside of a radius r. 
+
 4. testFunctions.py: tests the accuracy of approximate and analytic Jacobians for all functions in functions.py as well as additional functions (functions that don't have roots, etc.) 
 
 ----------------------
