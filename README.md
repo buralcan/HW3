@@ -1,5 +1,6 @@
 ----------------------
 APC 524 Assignment 3: Root finding and automated testing
+----------------------
 Betul Uralcan, Submitted on: 10/28/2016
 ----------------------
 This project offers an implementation of the Newton's method in one and higher dimensions with the functionalities described below. The project includes the following python codes:
