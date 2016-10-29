@@ -31,12 +31,20 @@ norm:    	      treshold for distance between initial guess and approximated roo
 functions.py
 ----------------------
 Polynomial:        1D polynomial with a function to compute the analytical jacobian
-                   Example usage: to construct the polynomial p(x) = x^2 + 2x + 3, and evaluate p(5):
-                                  p = Polynomial([1, 2, 3]) 
-                                  p(5)
+                   
+		   Example usage: to construct the polynomial p(x) = x^2 + 2x + 3, and evaluate p(5):
+                   
+		                  p = Polynomial([1, 2, 3]) 
+                                  
+				  p(5)
+
 Linear3D:          Set of three equations with a function to compute the analytical jacobian
-	                 Example usage: to construct the set of equations p1(x1, x2, x3)=5x1-3, p2(x1, x2, x3)=4x2-1, p3(x1, x2, x3)=x3-1:
+	           
+		   Example usage: to construct the set of equations p1(x1, x2, x3)=5x1-3, p2(x1, x2, x3)=4x2-1, p3(x1, x2, x3)=x3-1:
                                   p = Polynomial([5,4,1])
+
 WrongLinear3D:     Linear set of three equations with a function to compute a wrong analytical jacobian (for test purposes)
+
 PolynomialMD:      Set of three equations containing trigonometric functions with the analytical jacobian
+
 WrongPolynomialMD: Set of three equations containing sine/cosine terms with the wrong analytical jacobian (for test purposes)
