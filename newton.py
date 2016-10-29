@@ -1,7 +1,5 @@
 # newton - Newton-Raphson solver
-#
-# For APC 524 Homework 3
-# CWR, 18 Oct 2010
+# For APC 524 Assignment 3
 
 import numpy as N
 import functions as F

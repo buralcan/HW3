@@ -58,11 +58,13 @@ class TestFunctions(unittest.TestCase):
     # compare the wrong analytical jacobian with the approximatre and real jacobian 
     # for the 3D linear system
     def testWrongLinear3D(self):
+        # p1(x)=5x-3, p2(x)=4x-1, p3(x)=x-1
+        p = F.WrongLinear3D([5, 4, 1])
         x=N.matrix("1;0.5;-3")
         dx = 1.e-6
         Df_xReal = N.matrix("5.;4.;1.")
-        ApproximateDf_x=F.ApproximateJacobian(F.WrongLinear3D().f,x,dx)
-        AnalyticalDf_x=F.WrongLinear3D().AnalyticalJacobian(x)
+        ApproximateDf_x=F.ApproximateJacobian(p.f,x,dx)
+        AnalyticalDf_x=p.AnalyticalJacobian(x)
         self.assertEqual(ApproximateDf_x.shape,  AnalyticalDf_x.shape)
         #self.assertAlmostEqual(ApproximateDf_x,AnalyticalDf_x, places=3)
         try: N.testing.assert_array_almost_equal(ApproximateDf_x,  AnalyticalDf_x, decimal=3)

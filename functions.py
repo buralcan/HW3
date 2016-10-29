@@ -1,3 +1,8 @@
+# APC 524 Assignment 3
+# Genreal test functions for testing
+# more specific functions for testing are defined
+# in testNewton.py and testFunctions.py
+
 import math
 import numpy as N
 
@@ -46,11 +51,14 @@ class Polynomial(object):
 
 # 3D linear equation system
 class Linear3D:
+    def __init__(self, coeffs):
+        self._coeffs = coeffs
+
     def f(self,x):
         ans=N.matrix(N.zeros((len(x),1)))
-        ans[0,0]=5*x[0]-3
-        ans[1,0]=4*x[1]-1
-        ans[2,0]=x[2]+3
+        ans[0,0]=self._coeffs[0]*x[0]-3
+        ans[1,0]=self._coeffs[1]*x[1]-1
+        ans[2,0]=self._coeffs[2]*x[2]+3
         return ans
 
     def __call__(self, x):
@@ -58,24 +66,27 @@ class Linear3D:
 
     def AnalyticalJacobian(self,x): # computed by hand
         df = N.matrix(N.zeros((len(x),len(x))))
-        df[0,0]=5
+        df[0,0]=self._coeffs[0]
         df[0,1]=0
         df[0,2]=0
         df[1,0]=0
-        df[1,1]=4
+        df[1,1]=self._coeffs[1]
         df[1,2]=0
         df[2,0]=0
         df[2,1]=0
-        df[2,2]=1
+        df[2,2]=self._coeffs[2]
         return df
 
 # 3D linear equation system with wrong analytical jacobian
 class WrongLinear3D:
+    def __init__(self, coeffs):
+        self._coeffs = coeffs
+
     def f(self,x):
         ans=N.matrix(N.zeros((len(x),1)))
-        ans[0,0]=5*x[0]-3
-        ans[1,0]=4*x[1]-1
-        ans[2,0]=x[2]+3
+        ans[0,0]=self._coeffs[0]*x[0]-3
+        ans[1,0]=self._coeffs[1]*x[1]-1
+        ans[2,0]=self._coeffs[2]*x[2]+3
         return ans
 
     def __call__(self, x):
@@ -83,14 +94,14 @@ class WrongLinear3D:
 
     def AnalyticalJacobian(self,x): # this is the wrong jacobian
         df = N.matrix(N.zeros((len(x),len(x))))
-        df[0,0]=5
+        df[0,0]=self._coeffs[0]+3
         df[0,1]=0
-        df[0,2]=7
+        df[0,2]=self._coeffs[1]
         df[1,0]=1
-        df[1,1]=3
+        df[1,1]=self._coeffs[1]-1
         df[1,2]=0
         df[2,0]=0
-        df[2,1]=9
+        df[2,1]=self._coeffs[2]-3
         df[2,2]=1
         return df
 
