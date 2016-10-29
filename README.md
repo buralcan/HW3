@@ -16,10 +16,15 @@ This project offers an implementation of the Newton's method in one and higher d
 newton.py
 ----------------------
 The user can input the following variables:
+
 tol:    		    Tolerance for iteration (default: 1.e-6)
+
 maxiter: 	      Maximum number of iterations to perform (default: 20)
+
 dx:     		    Step size for computing approximate Jacobian (default: 1.e-6)
+
 Df:     		    Analytical jacobian (default: None (uses approximate Jacobian if Df not specified))
+
 norm:    	      treshold for distance between initial guess and approximated root (default: None)
 
 ----------------------
